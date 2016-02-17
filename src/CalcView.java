@@ -235,7 +235,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("+") {
 			public void pressed(){
-				theController.sum(numbers);
+				registerButton("+", theController);
 			}
 		};
 		c.gridx = 1;
@@ -306,6 +306,18 @@ public class CalcView extends JFrame
 	public static BigInteger getUserValue()
 	{
 		return new BigInteger(userValueText.getText());
+	}
+	
+	public static void registerButton(String button, CalcController theController) {		
+		String his = history.getText();
+		
+		if (button.equals("+")) {
+			String input = userValueText.getText();
+			int val = Integer.parseInt(userValueText.getText());
+			numbers.push(BigInteger.valueOf(val));
+			history.setText(his+","+input+button);
+			theController.sum(numbers);
+		}
 	}
 	
 	public static void changeInputButton(int buttonInput) {

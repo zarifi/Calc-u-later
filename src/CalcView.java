@@ -2,8 +2,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.math.BigInteger;
-
-import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.awt.GridBagLayout;
+import java.awt.Container;
+import java.awt.ComponentOrientation;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,6 +18,8 @@ public class CalcView extends JFrame
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
 	final static boolean RIGHT_TO_LEFT = false;
+	static int i = 0;
+	
 	private static final long serialVersionUID = -8730447125113729547L;
 	
 	private static JTextField userValueText;
@@ -23,7 +30,7 @@ public class CalcView extends JFrame
 	{
 		super("Simple Calculator");
 		
-		addComponentsToPane(this);
+		addComponentsToPane(this, theController);
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
@@ -31,7 +38,7 @@ public class CalcView extends JFrame
 		
 	}
 
-	public static void addComponentsToPane(Container pane) {
+	public static void addComponentsToPane(Container pane, final CalcController theController) {
 		if (RIGHT_TO_LEFT) {
 			pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		}
@@ -78,9 +85,20 @@ public class CalcView extends JFrame
 		
 		int x = 0;
 		int y = 2;
-
-		for (int i=0; i < 10; i++) {
-			JButton button1 = new JButton(""+i);
+		final int k = 0;
+		JButton button1;
+		// nTD: This creates buttons referring all to inputChange 10, last i.
+		List<ButtonAdapter> buttonList = new ArrayList<ButtonAdapter>();
+		for (i=0; i < 10; i++) {
+			buttonList.add(new ButtonAdapter(""+i) {
+				public void pressed() 
+				{
+					changeInputButton(i);
+				}
+			});			
+		}
+		
+		for (i = 0; i < 10; i++) {
 			c.fill = GridBagConstraints.HORIZONTAL;
 			c.gridx = x;
 			c.gridwidth = 1;
@@ -90,35 +108,35 @@ public class CalcView extends JFrame
 				x = 0;
 			} else {
 				x += 1;
-			}
-			pane.add(button1, c);
+			}			
+			pane.add(buttonList.get(i), c);
 		}
 		
-		button = new JButton(".");
+		button = new ButtonAdapter(".") {public void pressed(){ theController.clear();}};
 		c.gridx = 0;
 		c.gridwidth = 1;
 		c.gridy = y+1;
 		pane.add(button, c);
 		
-		button = new JButton("+");
+		button =  new ButtonAdapter("+") {public void pressed(){ theController.clear();}};
 		c.gridx = 1;
 		c.gridwidth = 1;
 		c.gridy = y+1;
 		pane.add(button, c);
 		
-		button = new JButton("-");
+		button =  new ButtonAdapter("-") {public void pressed(){ theController.clear();}};
 		c.gridx = 2;
 		c.gridwidth = 1;
 		c.gridy = y+1;
 		pane.add(button, c);
 		
-		button = new JButton("*");
+		button =  new ButtonAdapter("*") {public void pressed(){ theController.clear();}};
 		c.gridx = 3;
 		c.gridwidth = 1;
 		c.gridy = y+1;
 		pane.add(button, c);
 		
-		button = new JButton("/");
+		button =  new ButtonAdapter("/") {public void pressed(){ theController.clear();}};
 		c.gridx = 4;
 		c.gridwidth = 1;
 		c.gridy = y+1;
@@ -126,8 +144,7 @@ public class CalcView extends JFrame
 		
 		y += 1;
 
-
-		button = new JButton("Submit");
+		button = new ButtonAdapter("Submit") {public void pressed(){ theController.clear();}};
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 0;       //reset to default
 		c.weighty = 1.0;   //request any extra vertical space
@@ -138,7 +155,7 @@ public class CalcView extends JFrame
 		c.gridy = y + 1;       //third row
 		pane.add(button, c);
 		
-		button = new JButton("Clear");
+		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 0;       //reset to default
 		c.weighty = 1.0;   //request any extra vertical space
@@ -160,13 +177,18 @@ public class CalcView extends JFrame
 		return new BigInteger(userValueText.getText());
 	}
 	
+	public static void changeInputButton(int buttonInput) {
+		String value = String.valueOf(buttonInput);
+		userValueText.setText(value);
+	}
+	
 	/**
 	 * Set the string for the user input text field.
 	 * 
 	 * @param value The new value for the user input text field.
 	 * @pre. value is not null
 	 */
-	public void setUserValue(String value)
+	public static void setUserValue(String value)
 	{
 		userValueText.setText(value);
 	}

@@ -76,6 +76,10 @@ public void clear() {
 	showValue();
 }
 
+public void setValue(int value) {
+	
+}
+
 private void showValue() {
     BigInteger calcValue = model.getCalcValue();
     view.setCalcValue(calcValue.toString());	

@@ -13,6 +13,10 @@ public class CalcModel
 	{
 		clear();
 	}
+	
+	public void setValue() {
+		
+	}
 
 
 	/**

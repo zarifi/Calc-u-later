@@ -50,6 +50,15 @@ public class CalcController
         view.setVisible(true);
 		model.clear();
 	}
+	
+	public CalcController(CalcModel modelIn){
+		
+		model = modelIn;
+		view = new CalcView(this);
+        view.setVisible(true);
+		model.clear();
+		
+	}
 //	  NTD: should be bigint array
 public void sum(Stack<BigInteger> numbers) {
 	model.sum(numbers);
@@ -86,5 +95,7 @@ private void showValue() {
     BigInteger calcValue = model.getCalcValue();
     view.setCalcValue(calcValue.toString());	
 }
+
+
 
 }

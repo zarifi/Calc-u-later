@@ -86,31 +86,150 @@ public class CalcView extends JFrame
 		int x = 0;
 		int y = 2;
 		final int k = 0;
-		JButton button1;
+
 		// nTD: This creates buttons referring all to inputChange 10, last i.
-		List<ButtonAdapter> buttonList = new ArrayList<ButtonAdapter>();
-		for (i=0; i < 10; i++) {
-			buttonList.add(new ButtonAdapter(""+i) {
-				public void pressed() 
-				{
-					changeInputButton(i);
-				}
-			});			
-		}
-		
-		for (i = 0; i < 10; i++) {
-			c.fill = GridBagConstraints.HORIZONTAL;
-			c.gridx = x;
-			c.gridwidth = 1;
-			c.gridy = y;
-			if (x == 4) {
-				y += 1;
-				x = 0;
-			} else {
-				x += 1;
-			}			
-			pane.add(buttonList.get(i), c);
-		}
+//		List<ButtonAdapter> buttonList = new ArrayList<ButtonAdapter>();
+//		for (i=0; i < 10; i++) {
+//			buttonList.add(new ButtonAdapter(""+i) {
+//				public void pressed() 
+//				{
+//					changeInputButton(i);
+//				}
+//			});			
+//		}
+//		
+//		for (i = 0; i < 10; i++) {
+//			c.fill = GridBagConstraints.HORIZONTAL;
+//			c.gridx = x;
+//			c.gridwidth = 1;
+//			c.gridy = y;
+//			if (x == 4) {
+//				y += 1;
+//				x = 0;
+//			} else {
+//				x += 1;
+//			}			
+//			pane.add(buttonList.get(i), c);
+//		}
+		JButton button0 = new ButtonAdapter(""+0) {
+			public void pressed() 
+			{
+				changeInputButton(0);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 2;
+		pane.add(button0, c);
+
+		JButton button1 = new ButtonAdapter(""+1) {
+			public void pressed() 
+			{
+				changeInputButton(1);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 2;
+		pane.add(button1, c);
+
+		JButton button2 = new ButtonAdapter(""+2) {
+			public void pressed() 
+			{
+				changeInputButton(2);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridwidth = 1;
+		c.gridy = 2;
+		pane.add(button2, c);
+
+		JButton button3 = new ButtonAdapter(""+3) {
+			public void pressed() 
+			{
+				changeInputButton(3);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 2;
+		pane.add(button3, c);
+
+		JButton button4 = new ButtonAdapter(""+4) {
+			public void pressed() 
+			{
+				changeInputButton(4);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 2;
+		pane.add(button4, c);
+
+		JButton button5 = new ButtonAdapter(""+5) {
+			public void pressed() 
+			{
+				changeInputButton(5);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 3;
+		pane.add(button5, c);
+
+		JButton button6 = new ButtonAdapter(""+6) {
+			public void pressed() 
+			{
+				changeInputButton(6);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 3;
+		pane.add(button6, c);
+
+		JButton button7 = new ButtonAdapter(""+7) {
+			public void pressed() 
+			{
+				changeInputButton(7);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 2;
+		c.gridwidth = 1;
+		c.gridy = 3;
+		pane.add(button7, c);
+
+		JButton button8 = new ButtonAdapter(""+8) {
+			public void pressed() 
+			{
+				changeInputButton(8);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 3;
+		pane.add(button8, c);
+
+		JButton button9 = new ButtonAdapter(""+9) {
+			public void pressed() 
+			{
+				changeInputButton(9);
+			}
+		};
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 3;
+		pane.add(button9, c);
 		
 		button = new ButtonAdapter(".") {public void pressed(){ theController.clear();}};
 		c.gridx = 0;

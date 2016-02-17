@@ -38,7 +38,7 @@ public class CalcView extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
-		
+		// dog
 		this.numbers = new Stack();
 		
 	}

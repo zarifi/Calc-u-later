@@ -9,6 +9,7 @@ import java.awt.Container;
 import java.awt.ComponentOrientation;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.Stack;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -25,7 +26,7 @@ public class CalcView extends JFrame
 	private static JTextField userValueText;
 	private static JTextField calcText;
 	private static JTextField history;
-	private static ArrayList<BigInteger> numbers;
+	private static Stack<BigInteger> numbers;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -37,6 +38,8 @@ public class CalcView extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
+		
+		this.numbers = new Stack();
 		
 	}
 
@@ -109,6 +112,7 @@ public class CalcView extends JFrame
 				changeInputButton(0);
 			}
 		};
+		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
 		c.gridwidth = 1;
@@ -314,11 +318,10 @@ public class CalcView extends JFrame
 		String value = history.getText();
 		
 		int val = Integer.parseInt(userValueText.getText());
+		
 		System.out.println(""+val);
 		
-		
-		
-		numbers.add(BigInteger.valueOf(val));
+		numbers.push(BigInteger.valueOf(val));
 		
 		System.out.println("over here");
 				

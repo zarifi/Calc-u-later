@@ -1,6 +1,7 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class CalcController
 {
@@ -50,7 +51,7 @@ public class CalcController
 		model.clear();
 	}
 //	  NTD: should be bigint array
-public void sum(ArrayList<BigInteger> numbers) {
+public void sum(Stack<BigInteger> numbers) {
 	model.sum(numbers);
 	showValue();
 }

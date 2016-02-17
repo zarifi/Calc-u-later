@@ -1,6 +1,7 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 public class CalcModel
 {
@@ -35,14 +36,12 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to add to the current calculated value by.
 	 */
-	public void sum(ArrayList<BigInteger> numbers)
+	public void sum(Stack<BigInteger> numbers)
 	{
-		for (int i = 0; i < numbers.size(); i++) {
-			
-			BigInteger value = numbers.get(i);
-			calcValue = calcValue.add(value);
-		}
-		
+		BigInteger num1 = numbers.pop();
+		BigInteger num2 = numbers.pop();
+		calcValue = calcValue.add(num1);
+		calcValue = calcValue.add(num2);		
 	}
 	
 	/**

@@ -39,6 +39,7 @@ public class CalcView extends JFrame
 		this.pack();
 		this.setVisible(true);
 		// dog
+		//Another comment
 		this.numbers = new Stack();
 		
 	}

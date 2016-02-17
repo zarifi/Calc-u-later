@@ -315,8 +315,9 @@ public class CalcView extends JFrame
 			String input = userValueText.getText();
 			int val = Integer.parseInt(userValueText.getText());
 			numbers.push(BigInteger.valueOf(val));
-			history.setText(his+","+input+button);
+			history.setText(his+","+input+button+"=");
 			theController.sum(numbers);
+			userValueText.setText("");
 		}
 	}
 	
@@ -324,6 +325,12 @@ public class CalcView extends JFrame
 		String value = String.valueOf(buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
+		String his = history.getText();
+		char lastChar = his.charAt(his.length() - 1);
+		if (lastChar == '=') {
+			String removeEquals = his.substring(0, his.length() - 1);
+			history.setText(removeEquals);
+		}
 	}
 
 	public static void addToHistory() {

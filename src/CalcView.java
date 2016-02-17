@@ -1,8 +1,12 @@
-import java.awt.FlowLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.math.BigInteger;
+
+import java.awt.*;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class CalcView extends JFrame
 {
@@ -20,24 +24,41 @@ public class CalcView extends JFrame
 		calcText = new JTextField(20);
 		calcText.setEditable(false);
 		
-		setLayout(new FlowLayout());
-		add(new JLabel("Calculated Value"));
-		add(calcText);
-		add(new JLabel("Input"));
-		add(userValueText);
-		add(new ButtonAdapter("Sum") {
-		       public void pressed(){ theController.sum(getUserValue());}});
-		add(new ButtonAdapter("Subtract") {
-		       public void pressed(){ theController.subtract(getUserValue());}});
-		add(new ButtonAdapter("Multiply") {
-		       public void pressed(){ theController.multiply(getUserValue());}});
-		add(new ButtonAdapter("Divide") {
-		       public void pressed(){ theController.divide(getUserValue());}});
-		add(new ButtonAdapter("Clear") {
-		       public void pressed(){ theController.clear();}});
-		pack();
+		JPanel gui = new JPanel(new BorderLayout(6,6));
+		gui.setBorder(new EmptyBorder(5,5,5,5));
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setContentPane(gui);
+
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        gui.add(calcText, BorderLayout.NORTH);
+        gui.add(new JLabel("Calculated Value"));
+        gui.add(userValueText);
+        gui.add(new JLabel("User Input"));
+
+        // add padding around the buttons
+        JPanel panelButtons = new JPanel(new GridLayout(5,5,6,6));
+		for (int i=0; i < 10; i++) {
+			JButton oneButton = new JButton(""+i);
+	        panelButtons.add(oneButton);
+		}
+        
+        panelButtons.add(new ButtonAdapter("Sum") {
+		       public void pressed(){ theController.sum(getUserValue());}});
+        panelButtons.add(new ButtonAdapter("Subtract") {
+		       public void pressed(){ theController.subtract(getUserValue());}});
+        panelButtons.add(new ButtonAdapter("Multiply") {
+		       public void pressed(){ theController.multiply(getUserValue());}});
+        panelButtons.add(new ButtonAdapter("Divide") {
+		       public void pressed(){ theController.divide(getUserValue());}});
+        panelButtons.add(new ButtonAdapter("Clear") {
+		       public void pressed(){ theController.clear();}});
+		gui.add(panelButtons, BorderLayout.CENTER);
+		
+		
+		
+		this.pack();
+        this.setVisible(true); 
 	}
 	
 	/**

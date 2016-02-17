@@ -25,7 +25,7 @@ public class CalcView extends JFrame
 	private static JTextField userValueText;
 	private static JTextField calcText;
 	private static JTextField history;
-	private static BigInteger[] numbers;
+	private static ArrayList<BigInteger> numbers;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -313,9 +313,15 @@ public class CalcView extends JFrame
 	public static void addToHistory() {
 		String value = history.getText();
 		
-		int val = Integer.valueOf(userValueText.getText());
-		numbers[buttonClicked] = BigInteger.valueOf(val);
+		int val = Integer.parseInt(userValueText.getText());
+		System.out.println(""+val);
 		
+		
+		
+		numbers.add(BigInteger.valueOf(val));
+		
+		System.out.println("over here");
+				
 		if (buttonClicked == 0) {
 			buttonClicked += 1;
 		} else {

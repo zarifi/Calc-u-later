@@ -320,7 +320,8 @@ public class CalcView extends JFrame
 			BigInteger num2 = numbers.pop();
 			BigInteger value = num1.add(num2);
 			numbers.push(value);
-			theController.sum(value);
+			
+			setCalcValue(value.toString());
 			
 			userValueText.setText("");
 		} else if (button.equals("-")) {
@@ -328,11 +329,16 @@ public class CalcView extends JFrame
 			int val = Integer.parseInt(userValueText.getText());
 			numbers.push(BigInteger.valueOf(val));
 			history.setText(his+","+input+button+"=");
+			
 			BigInteger num1 = numbers.pop();
+			System.out.println(num1);
 			BigInteger num2 = numbers.pop();
-			BigInteger value = num1.subtract(num2);
+			System.out.println(num2);
+			BigInteger value = num2.subtract(num1);
+			System.out.println(value);
 			numbers.push(value);
-			theController.sum(value);
+			
+			setCalcValue(value.toString());
 			
 			userValueText.setText("");
 		}
@@ -392,7 +398,7 @@ public class CalcView extends JFrame
 	 * @param value The new value for the calculated value text field.
 	 * @pre. value is not null
 	 */
-	public void setCalcValue(String value)
+	public static void setCalcValue(String value)
 	{
 		calcText.setText(value);
 	}

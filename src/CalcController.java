@@ -51,8 +51,8 @@ public class CalcController
 		model.clear();
 	}
 //	  NTD: should be bigint array
-public void sum(Stack<BigInteger> numbers) {
-	model.sum(numbers);
+public void sum(BigInteger number) {
+	model.sum(number);
 	showValue();
 }
 	  

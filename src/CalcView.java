@@ -76,7 +76,7 @@ public class CalcView extends JFrame
 		c.gridx = 4;
 		c.gridy = 0;
 		c.gridwidth = 2;
-		pane.add(new JLabel("Total"), c);
+		pane.add(new JLabel("Calculated Value"), c);
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx = 0;
@@ -245,7 +245,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("-") {
 			public void pressed(){
-				theController.subtract(getUserValue());
+				registerButton("-", theController);
 			}
 		};
 		c.gridx = 2;
@@ -316,7 +316,24 @@ public class CalcView extends JFrame
 			int val = Integer.parseInt(userValueText.getText());
 			numbers.push(BigInteger.valueOf(val));
 			history.setText(his+","+input+button+"=");
-			theController.sum(numbers);
+			BigInteger num1 = numbers.pop();
+			BigInteger num2 = numbers.pop();
+			BigInteger value = num1.add(num2);
+			numbers.push(value);
+			theController.sum(value);
+			
+			userValueText.setText("");
+		} else if (button.equals("-")) {
+			String input = userValueText.getText();
+			int val = Integer.parseInt(userValueText.getText());
+			numbers.push(BigInteger.valueOf(val));
+			history.setText(his+","+input+button+"=");
+			BigInteger num1 = numbers.pop();
+			BigInteger num2 = numbers.pop();
+			BigInteger value = num1.subtract(num2);
+			numbers.push(value);
+			theController.sum(value);
+			
 			userValueText.setText("");
 		}
 	}

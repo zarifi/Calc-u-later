@@ -36,12 +36,9 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to add to the current calculated value by.
 	 */
-	public void sum(Stack<BigInteger> numbers)
+	public void sum(BigInteger number)
 	{
-		BigInteger num1 = numbers.pop();
-		BigInteger num2 = numbers.pop();
-		calcValue = calcValue.add(num1);
-		calcValue = calcValue.add(num2);		
+		calcValue = calcValue.add(number);		
 	}
 	
 	/**

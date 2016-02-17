@@ -48,9 +48,9 @@ public class CalcController
         view.setVisible(true);
 		model.clear();
 	}
-	  
-public void sum(BigInteger userValue) {
-	model.sum(userValue);
+//	  NTD: should be bigint array
+public void sum(BigInteger[] numbers) {
+	model.sum(numbers);
 	showValue();
 }
 	  

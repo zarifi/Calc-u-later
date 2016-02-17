@@ -33,9 +33,13 @@ public class CalcModel
 	 * @param userValue
 	 *            The value to add to the current calculated value by.
 	 */
-	public void sum(BigInteger userValue)
+	public void sum(BigInteger[] numbers)
 	{
-		calcValue = calcValue.add(userValue);
+		for (int i = 0; i < numbers.length; i++) {
+			BigInteger num = numbers[i];
+			calcValue = calcValue.add(num);
+		}
+		
 	}
 	
 	/**

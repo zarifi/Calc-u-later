@@ -18,13 +18,14 @@ public class CalcView extends JFrame
 	final static boolean shouldFill = true;
 	final static boolean shouldWeightX = true;
 	final static boolean RIGHT_TO_LEFT = false;
-	static int i = 0;
+	static int buttonClicked = 0;
 	
 	private static final long serialVersionUID = -8730447125113729547L;
 	
 	private static JTextField userValueText;
 	private static JTextField calcText;
 	private static JTextField history;
+	private static BigInteger[] numbers;
 	
 	@SuppressWarnings("serial")
 	public CalcView(final CalcController theController)
@@ -230,7 +231,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("+") {
 			public void pressed(){
-				theController.sum(getUserValue());
+				theController.sum(numbers);
 			}
 		};
 		c.gridx = 1;
@@ -270,7 +271,7 @@ public class CalcView extends JFrame
 		
 		y += 1;
 
-		button = new ButtonAdapter("Submit") {public void pressed(){ theController.clear();}};
+		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory();}};
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady = 0;       //reset to default
 		c.weighty = 1.0;   //request any extra vertical space
@@ -305,7 +306,28 @@ public class CalcView extends JFrame
 	
 	public static void changeInputButton(int buttonInput) {
 		String value = String.valueOf(buttonInput);
+		value = userValueText.getText() + value;
 		userValueText.setText(value);
+	}
+
+	public static void addToHistory() {
+		String value = history.getText();
+		
+		int val = Integer.valueOf(userValueText.getText());
+		numbers[buttonClicked] = BigInteger.valueOf(val);
+		
+		if (buttonClicked == 0) {
+			buttonClicked += 1;
+		} else {
+			buttonClicked += 1;
+			value += ",";
+		}
+		
+		value += userValueText.getText();		
+		
+		history.setText(value);
+		
+		userValueText.setText("");
 	}
 	
 	/**

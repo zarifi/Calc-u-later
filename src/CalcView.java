@@ -286,6 +286,16 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button, c);
+		
+		button =  new ButtonAdapter(".") {
+			public void pressed(){
+				registerButton(".", theController);
+			}
+		};
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
 
 		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory();}};
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -322,8 +332,9 @@ public class CalcView extends JFrame
 	
 	public static void registerButton(String button, CalcController theController) {		
 		String his = history.getText();
-		
-		if (!button.equals("+/-")) {
+		// right now this method is big, so when we refactor it we will put each button into its own controller method
+		// furthermore, we will make the stack and histroy be part of the model
+		if (!button.equals("+/-") && !button.equals(".")) {
 			char lastChar = his.charAt(his.length() - 1);
 			if (lastChar == '=') {
 				String removeEquals = his.substring(0, his.length() - 1);
@@ -398,10 +409,7 @@ public class CalcView extends JFrame
 			
 			userValueText.setText("");
 		} else if (button.equals("+/-")) {
-			System.out.println("Switching Input");
-			System.out.println("Switching Input");
-			System.out.println("Switching Input");
-			System.out.println("Switching Input");
+			
 			String userVal = userValueText.getText();
 			char changeSign = userVal.charAt(0);
 			
@@ -410,6 +418,25 @@ public class CalcView extends JFrame
 				userValueText.setText(userVal);
 			} else {
 				userVal = "-"+userVal;
+				userValueText.setText(userVal);
+			}
+			
+			
+		} else if (button.equals(".")) {
+			
+			String userVal = userValueText.getText();
+			
+			
+			if ( userVal.length() > 1 && userVal.charAt(1) == '.' ) {
+				userVal = userVal.substring(1, his.length());
+				userValueText.setText(userVal);
+			} else {
+				
+				if (userVal.length() > 0 ) {
+					userVal = userVal + ".";
+				} else {
+					userVal = "0." + userVal;
+				}
 				userValueText.setText(userVal);
 			}
 			

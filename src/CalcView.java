@@ -276,6 +276,16 @@ public class CalcView extends JFrame
 		pane.add(button, c);
 		
 		y += 1;
+		
+		button =  new ButtonAdapter("+/-") {
+			public void pressed(){
+				registerButton("+/-", theController);
+			}
+		};
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
 
 		button = new ButtonAdapter("Enter") {public void pressed(){ addToHistory();}};
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -285,7 +295,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 1;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 6;       //third row
+		c.gridy = 7;       //third row
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
@@ -296,7 +306,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 3;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 6;       //third row
+		c.gridy = 7;       //third row
 		pane.add(button, c);
 }
 
@@ -313,11 +323,14 @@ public class CalcView extends JFrame
 	public static void registerButton(String button, CalcController theController) {		
 		String his = history.getText();
 		
-		char lastChar = his.charAt(his.length() - 1);
-		if (lastChar == '=') {
-			String removeEquals = his.substring(0, his.length() - 1);
-			history.setText(removeEquals);
+		if (!button.equals("+/-")) {
+			char lastChar = his.charAt(his.length() - 1);
+			if (lastChar == '=') {
+				String removeEquals = his.substring(0, his.length() - 1);
+				history.setText(removeEquals);
+			}
 		}
+		
 		
 		if (button.equals("+")) {
 			System.out.println("addition");
@@ -384,6 +397,23 @@ public class CalcView extends JFrame
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
+		} else if (button.equals("+/-")) {
+			System.out.println("Switching Input");
+			System.out.println("Switching Input");
+			System.out.println("Switching Input");
+			System.out.println("Switching Input");
+			String userVal = userValueText.getText();
+			char changeSign = userVal.charAt(0);
+			
+			if (changeSign == '-') {
+				userVal = userVal.substring(1, his.length());
+				userValueText.setText(userVal);
+			} else {
+				userVal = "-"+userVal;
+				userValueText.setText(userVal);
+			}
+			
+			
 		}
 	}
 	

@@ -85,6 +85,7 @@ public void divide(BigInteger userValue) {
 public void clear() {
 	model.clear();
 	showValue();
+	view.setHistory("Start a new calculation");
 }
 
 public void setValue(int value) {
@@ -93,7 +94,8 @@ public void setValue(int value) {
 
 private void showValue() {
     BigInteger calcValue = model.getCalcValue();
-    view.setCalcValue(calcValue.toString());	
+    view.setCalcValue(calcValue.toString());
+    
 }
 
 

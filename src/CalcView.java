@@ -62,6 +62,7 @@ public class CalcView extends JFrame
 		userValueText = new JTextField(5);
 		history = new JTextField(20);
 		history.setEditable(false);
+		history.setText("Start a new calculation");
 		
 		if (shouldWeightX) {
 			c.weightx = 0.5;
@@ -256,7 +257,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("*") {
 			public void pressed(){
-				theController.multiply(getUserValue());
+				registerButton("*", theController);
 			}
 		};
 		c.gridx = 3;
@@ -312,10 +313,22 @@ public class CalcView extends JFrame
 	public static void registerButton(String button, CalcController theController) {		
 		String his = history.getText();
 		
+		char lastChar = his.charAt(his.length() - 1);
+		if (lastChar == '=') {
+			String removeEquals = his.substring(0, his.length() - 1);
+			history.setText(removeEquals);
+		}
+		
 		if (button.equals("+")) {
+			System.out.println("addition");
 			String input = userValueText.getText();
-			int val = Integer.parseInt(userValueText.getText());
-			numbers.push(BigInteger.valueOf(val));
+			
+			
+			if (!userValueText.getText().equals("")) {
+				// push number only if value inputted
+				int val = Integer.parseInt(userValueText.getText());
+				numbers.push(BigInteger.valueOf(val));
+			}
 			history.setText(his+","+input+button+"=");
 			BigInteger num1 = numbers.pop();
 			BigInteger num2 = numbers.pop();
@@ -326,9 +339,14 @@ public class CalcView extends JFrame
 			
 			userValueText.setText("");
 		} else if (button.equals("-")) {
+			System.out.println("subtracting");
 			String input = userValueText.getText();
-			int val = Integer.parseInt(userValueText.getText());
-			numbers.push(BigInteger.valueOf(val));
+			
+			if (!userValueText.getText().equals("")) {
+				// push number only if value inputted
+				int val = Integer.parseInt(userValueText.getText());
+				numbers.push(BigInteger.valueOf(val));
+			}
 			history.setText(his+","+input+button+"=");
 			
 			BigInteger num1 = numbers.pop();
@@ -342,14 +360,44 @@ public class CalcView extends JFrame
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
+		} else if (button.equals("*")) {
+			System.out.println("multiplying");
+			String input = userValueText.getText();
+			System.out.println("blah");
+			System.out.println("blargggg");
+			if (!userValueText.getText().equals("")) {
+				// push number only if value inputted
+				int val = Integer.parseInt(userValueText.getText());
+				numbers.push(BigInteger.valueOf(val));
+			}
+			
+			history.setText(his+","+input+button+"=");
+	
+			BigInteger num1 = numbers.pop();
+			System.out.println(num1);
+			BigInteger num2 = numbers.pop();
+			System.out.println(num2);
+			BigInteger value = num2.multiply(num1);
+			System.out.println(value);
+			numbers.push(value);
+			
+			setCalcValue(value.toString());
+			
+			userValueText.setText("");
 		}
 	}
 	
 	public static void changeInputButton(int buttonInput) {
+
 		String value = String.valueOf(buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
 		String his = history.getText();
+		
+		if (history.getText().equals("Start a new calculation")) {
+			history.setText("");
+		}
+		
 		char lastChar = his.charAt(his.length() - 1);
 		if (lastChar == '=') {
 			String removeEquals = his.substring(0, his.length() - 1);
@@ -391,6 +439,10 @@ public class CalcView extends JFrame
 	public static void setUserValue(String value)
 	{
 		userValueText.setText(value);
+	}
+	
+	public static void setHistory(String value) {
+		history.setText(value);
 	}
 	
 	/**

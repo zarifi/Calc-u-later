@@ -507,22 +507,16 @@ public class CalcView extends JFrame
 
 			history.setText(his+","+input+button+"=");
 	
-			//Extremely convoluted way to convert BigInt > String > Double > (Do the math) > int > BigInt
-			BigInteger num1 = numbers.pop();
+			//Fixed convolution
+			Double num1 = Double.valueOf(numbers.pop().toString());
 			System.out.println(num1);
+			num1 = Math.sin(num1);
+			System.out.println(num1);
+			BigInteger ans = new BigDecimal(num1).toBigInteger();
 			
-			String numS = num1.toString();
-			Double numD = Double.valueOf(numS);
+			numbers.push(ans);
 			
-			numD = Math.sin(numD);
-			
-			int numI = (int) numD.doubleValue();
-			
-			BigInteger value = BigInteger.valueOf(numI);
-			
-			numbers.push(value);
-			
-			setCalcValue(value.toString());
+			setCalcValue(num1.toString());
 			
 			userValueText.setText("");
 		} 
@@ -535,22 +529,16 @@ public class CalcView extends JFrame
 
 			history.setText(his+","+input+button+"=");
 	
-			//Extremely convoluted way to convert BigInt > String > Double > (Do the math) > int > BigInt
-			BigInteger num1 = numbers.pop();
+			//Fixed convolution
+			Double num1 = Double.valueOf(numbers.pop().toString());
 			System.out.println(num1);
+			num1 = Math.cos(num1);
+			System.out.println(num1);
+			BigInteger ans = new BigDecimal(num1).toBigInteger();
 			
-			String numS = num1.toString();
-			Double numD = Double.valueOf(numS);
+			numbers.push(ans);
 			
-			numD = Math.cos(numD);
-			
-			int numI = (int) numD.doubleValue();
-			
-			BigInteger value = BigInteger.valueOf(numI);
-			
-			numbers.push(value);
-			
-			setCalcValue(value.toString());
+			setCalcValue(num1.toString());
 			
 			userValueText.setText("");
 		}

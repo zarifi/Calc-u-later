@@ -266,7 +266,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("/") {
 			public void pressed(){
-				theController.divide(getUserValue());
+				registerButton("/", theController);
 			}
 		};
 		c.gridx = 4;

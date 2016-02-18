@@ -3,6 +3,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.GridBagLayout;
@@ -266,7 +267,7 @@ public class CalcView extends JFrame
 		
 		button =  new ButtonAdapter("/") {
 			public void pressed(){
-				theController.divide(getUserValue());
+				registerButton("/", theController);
 			}
 		};
 		c.gridx = 4;
@@ -313,6 +314,18 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 6;
 		pane.add(button, c);
+
+
+		button =  new ButtonAdapter("cos") {
+			public void pressed(){
+				registerButton("cos", theController);
+			}
+		};
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
+
 		
 		y += 1;
 
@@ -440,7 +453,31 @@ public class CalcView extends JFrame
 				userValueText.setText(userVal);
 			}
 			
+		} else if (button.equals("/")) {
+			System.out.println("dividng");
+			String s = userValueText.getText();
+			if (!userValueText.getText().equals("")) {
+				// push number only if value inputted
+				int val = Integer.parseInt(userValueText.getText());
+				numbers.push(BigInteger.valueOf(val));
+			}
 			
+			history.setText(his+","+s+button+"=");
+	
+			Double num1 = Double.valueOf(numbers.pop().toString());
+			System.out.println(num1);
+			Double num2 = Double.valueOf(numbers.pop().toString());
+			System.out.println(num2);
+			Double value1 = num2 / (num1);
+			if (num1 == 0){
+				setCalcValue("YOU JUST DIVIDED BY ZERO");
+				throw new IllegalArgumentException("I can't believe you've done this.");
+			}
+			System.out.println(value1);			
+			BigInteger value2 = new BigDecimal(value1).toBigInteger();
+			numbers.push(value2);
+
+			setCalcValue(value1.toString());
 		} else if (button.equals(".")) {
 			
 			String userVal = userValueText.getText();
@@ -486,7 +523,34 @@ public class CalcView extends JFrame
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
+		} else if (button.equals("cos")) {
+			
+			//THIS WILL ALWAYS BE 0 UNTIL DECIMALS ARE SORTED OUT!
+			System.out.print("Cos of ");
+			String input = userValueText.getText();
+
+			history.setText(his+","+input+button+"=");
+	
+			//Extremely convoluted way to convert BigInt > String > Double > (Do the math) > int > BigInt
+			BigInteger num1 = numbers.pop();
+			System.out.println(num1);
+			
+			String numS = num1.toString();
+			Double numD = Double.valueOf(numS);
+			
+			numD = Math.cos(numD);
+			
+			int numI = (int) numD.doubleValue();
+			
+			BigInteger value = BigInteger.valueOf(numI);
+			
+			numbers.push(value);
+			
+			setCalcValue(value.toString());
+			
+			userValueText.setText("");
 		}
+
 	}
 	
 	public static void changeInputButton(int buttonInput) {

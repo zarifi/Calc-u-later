@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,6 @@ public class CalcView extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
-		// dog
-		//Another comment
 		this.numbers = new Stack();
 		
 	}
@@ -275,6 +274,17 @@ public class CalcView extends JFrame
 		c.gridy = 5;
 		pane.add(button, c);
 		
+		button =  new ButtonAdapter("π") {
+			public void pressed(){
+				changeInputButton(Math.PI);	//So basically 3?
+			}
+		};
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
+		
+		
 		y += 1;
 		
 		button =  new ButtonAdapter("+/-") {
@@ -461,6 +471,14 @@ public class CalcView extends JFrame
 			history.setText(removeEquals);
 		}
 	}
+	
+	//Added to handle doubles such as pi
+	public static void changeInputButton(double buttonInput) {
+		String value = String.valueOf(buttonInput);
+		value = userValueText.getText() + value;
+		userValueText.setText(value);
+	}
+	
 
 	public static void addToHistory() {
 		String value = history.getText();

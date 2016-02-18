@@ -15,7 +15,6 @@ public class CalcControllerTest {
 	@Before
 	public void setUp() throws Exception 
 	{
-		//Should probably set something up here...
 		model = new CalcModel();
 		controller = new CalcController(model);
 	}
@@ -78,8 +77,19 @@ public class CalcControllerTest {
 		
 		assertEquals(BigInteger.valueOf(2), model.getCalcValue());
 		
+		//Divide by zero test case
+		/*
+		s.removeAllElements();
+		
+		s.add(BigInteger.valueOf(10));
+		s.add(BigInteger.valueOf(0));
+		
+		controller.divide(s);
+		*/
+		
 	}
 	
+
 	
 	
 	

@@ -380,16 +380,20 @@ public class CalcView extends JFrame
 			
 			if (!userValueText.getText().equals("")) {
 				// push number only if value inputted
-				int val = Integer.parseInt(userValueText.getText());
-				numbers.push(BigInteger.valueOf(val));
+				double val = Double.valueOf(userValueText.getText());
+				numbers.push(new BigDecimal(val).toBigInteger());
 			}
 			history.setText(his+","+input+button+"=");
-			BigInteger num1 = numbers.pop();
-			BigInteger num2 = numbers.pop();
-			BigInteger value = num1.add(num2);
-			numbers.push(value);
+
 			
-			setCalcValue(value.toString());
+			Double num1 = Double.valueOf(new BigDecimal(numbers.pop()).toString());
+			System.out.println(num1);
+			Double num2 = Double.valueOf(new BigDecimal(numbers.pop()).toString());
+			System.out.println(num2);
+			BigInteger ans = new BigDecimal(num1 + num2).toBigInteger();
+			numbers.push(ans);
+			System.out.println(ans);
+			setCalcValue(ans.toString());
 			
 			userValueText.setText("");
 		} else if (button.equals("-")) {
@@ -403,15 +407,18 @@ public class CalcView extends JFrame
 			}
 			history.setText(his+","+input+button+"=");
 			
-			BigInteger num1 = numbers.pop();
+			Double num1 = Double.valueOf(numbers.pop().toString());
 			System.out.println(num1);
-			BigInteger num2 = numbers.pop();
+			Double num2 = Double.valueOf(numbers.pop().toString());
 			System.out.println(num2);
-			BigInteger value = num2.subtract(num1);
-			System.out.println(value);
-			numbers.push(value);
+			BigInteger ans = new BigDecimal(num1 - num2).toBigInteger();
+			numbers.push(ans);
 			
-			setCalcValue(value.toString());
+			setCalcValue(ans.toString());
+			System.out.println(ans);
+			numbers.push(ans);
+			
+			setCalcValue(ans.toString());
 			
 			userValueText.setText("");
 		} else if (button.equals("*")) {
@@ -427,15 +434,18 @@ public class CalcView extends JFrame
 			
 			history.setText(his+","+input+button+"=");
 	
-			BigInteger num1 = numbers.pop();
+			Double num1 = Double.valueOf(numbers.pop().toString());
 			System.out.println(num1);
-			BigInteger num2 = numbers.pop();
+			Double num2 = Double.valueOf(numbers.pop().toString());
 			System.out.println(num2);
-			BigInteger value = num2.multiply(num1);
-			System.out.println(value);
-			numbers.push(value);
+			BigInteger ans = new BigDecimal(num1 * num2).toBigInteger();
+			numbers.push(ans);
 			
-			setCalcValue(value.toString());
+			setCalcValue(ans.toString());
+			System.out.println(ans);
+			numbers.push(ans);
+			
+			setCalcValue(ans.toString());
 			
 			userValueText.setText("");
 
@@ -592,6 +602,7 @@ public class CalcView extends JFrame
 		
 		BigInteger allValue = new BigDecimal(val).toBigInteger();
 		numbers.push(allValue);
+		System.out.println(numbers.get(numbers.size() -1));
 		
 		System.out.println("over here");
 				
@@ -607,6 +618,10 @@ public class CalcView extends JFrame
 		history.setText(value);
 		
 		userValueText.setText("");
+	}
+	
+	public static void setButtonClicked() {
+		buttonClicked = 0;
 	}
 	
 	/**

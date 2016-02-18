@@ -568,17 +568,30 @@ public class CalcView extends JFrame
 		String value = String.valueOf(buttonInput);
 		value = userValueText.getText() + value;
 		userValueText.setText(value);
+		String his = history.getText();
+		
+		if (history.getText().equals("Start a new calculation")) {
+			history.setText("");
+		}
+		
+		char lastChar = his.charAt(his.length() - 1);
+		if (lastChar == '=') {
+			String removeEquals = his.substring(0, his.length() - 1);
+			history.setText(removeEquals);
+		}
+
 	}
 	
 
 	public static void addToHistory() {
 		String value = history.getText();
 		
-		int val = Integer.parseInt(userValueText.getText());
+		double val = Double.parseDouble(userValueText.getText());
 		
 		System.out.println(""+val);
 		
-		numbers.push(BigInteger.valueOf(val));
+		BigInteger allValue = new BigDecimal(val).toBigInteger();
+		numbers.push(allValue);
 		
 		System.out.println("over here");
 				

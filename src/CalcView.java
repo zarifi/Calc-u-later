@@ -384,12 +384,15 @@ public class CalcView extends JFrame
 				numbers.push(BigInteger.valueOf(val));
 			}
 			history.setText(his+","+input+button+"=");
-			BigInteger num1 = numbers.pop();
-			BigInteger num2 = numbers.pop();
-			BigInteger value = num1.add(num2);
-			numbers.push(value);
-			
-			setCalcValue(value.toString());
+
+			Double num1 = numbers.pop().toString();
+			System.out.println(num1);
+			Double num2 = numbers.pop().toString();
+			System.out.println(num2);
+			Double value = num2 + num1;
+			BigInteger ans = new BigDecimal(value).toBigInteger();
+			System.out.println(ans);
+			numbers.push(ans);
 			
 			userValueText.setText("");
 		} else if (button.equals("-")) {
@@ -401,24 +404,26 @@ public class CalcView extends JFrame
 				int val = Integer.parseInt(userValueText.getText());
 				numbers.push(BigInteger.valueOf(val));
 			}
+
 			history.setText(his+","+input+button+"=");
-			
-			BigInteger num1 = numbers.pop();
+
+			Double num1 = numbers.pop().toString();
 			System.out.println(num1);
-			BigInteger num2 = numbers.pop();
+			Double num2 = numbers.pop().toString();
 			System.out.println(num2);
-			BigInteger value = num2.subtract(num1);
-			System.out.println(value);
-			numbers.push(value);
+			Double value = num2 - num1;
+			BigInteger ans = new BigDecimal(value).toBigInteger();
+			System.out.println(ans);
+			numbers.push(ans);
 			
 			setCalcValue(value.toString());
+			
+			userValueText.setText("");
 			
 			userValueText.setText("");
 		} else if (button.equals("*")) {
 			System.out.println("multiplying");
 			String input = userValueText.getText();
-			System.out.println("blah");
-			System.out.println("blargggg");
 			if (!userValueText.getText().equals("")) {
 				// push number only if value inputted
 				int val = Integer.parseInt(userValueText.getText());
@@ -427,13 +432,14 @@ public class CalcView extends JFrame
 			
 			history.setText(his+","+input+button+"=");
 	
-			BigInteger num1 = numbers.pop();
+			Double num1 = numbers.pop().toString();
 			System.out.println(num1);
-			BigInteger num2 = numbers.pop();
+			Double num2 = numbers.pop().toString();
 			System.out.println(num2);
-			BigInteger value = num2.multiply(num1);
-			System.out.println(value);
-			numbers.push(value);
+			Double value = num2 * num1;
+			BigInteger ans = new BigDecimal(value).toBigInteger();
+			System.out.println(ans);
+			numbers.push(ans);
 			
 			setCalcValue(value.toString());
 			

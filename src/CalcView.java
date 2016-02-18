@@ -3,6 +3,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import java.math.BigInteger;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.GridBagLayout;
@@ -449,15 +450,20 @@ public class CalcView extends JFrame
 			
 			history.setText(his+","+s+button+"=");
 	
-			BigInteger num1 = numbers.pop();
+			Double num1 = Double.valueOf(numbers.pop().toString());
 			System.out.println(num1);
-			BigInteger num2 = numbers.pop();
+			Double num2 = Double.valueOf(numbers.pop().toString());
 			System.out.println(num2);
-			BigInteger value = num2.divide(num1);
-			System.out.println(value);
-			numbers.push(value);
-			
-			setCalcValue(value.toString());
+			Double value1 = num2 / (num1);
+			if (num1 == 0){
+				setCalcValue("YOU JUST DIVIDED BY ZERO");
+				throw new IllegalArgumentException("I can't believe you've done this.");
+			}
+			System.out.println(value1);			
+			BigInteger value2 = new BigDecimal(value1).toBigInteger();
+			numbers.push(value2);
+
+			setCalcValue(value1.toString());
 			}	
 
 		else if (button.equals("+/-")) {

@@ -1,6 +1,7 @@
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,6 @@ public class CalcView extends JFrame
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
 		this.setVisible(true);
-		// dog
-		//Another comment
 		this.numbers = new Stack();
 		
 	}
@@ -274,6 +273,56 @@ public class CalcView extends JFrame
 		c.gridwidth = 1;
 		c.gridy = 5;
 		pane.add(button, c);
+
+		button =  new ButtonAdapter("+/-") {
+			public void pressed(){
+				registerButton("+/-", theController);
+			}
+		};
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
+		
+		button =  new ButtonAdapter(".") {
+			public void pressed(){
+				registerButton(".", theController);
+			}
+		};
+		c.gridx = 1;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
+		
+		button =  new ButtonAdapter("π") {
+			public void pressed(){
+				changeInputButton(Math.PI);	//So basically 3?
+			}
+		};
+		c.gridx = 2;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
+		
+		button =  new ButtonAdapter("sin") {
+			public void pressed(){
+				registerButton("sin", theController);
+			}
+		};
+		c.gridx = 3;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
+
+		button =  new ButtonAdapter("cos") {
+			public void pressed(){
+				registerButton("cos", theController);
+			}
+		};
+		c.gridx = 4;
+		c.gridwidth = 1;
+		c.gridy = 6;
+		pane.add(button, c);
 		
 		y += 1;
 
@@ -285,7 +334,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 1;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 6;       //third row
+		c.gridy = 7;       //third row
 		pane.add(button, c);
 		
 		button =  new ButtonAdapter("Clear") {public void pressed(){ theController.clear();}};
@@ -296,7 +345,7 @@ public class CalcView extends JFrame
 		c.insets = new Insets(10,0,0,0);  //top padding
 		c.gridx = 3;       //aligned with button 2
 		c.gridwidth = 2;   //2 columns wide
-		c.gridy = 6;       //third row
+		c.gridy = 7;       //third row
 		pane.add(button, c);
 }
 
@@ -312,12 +361,16 @@ public class CalcView extends JFrame
 	
 	public static void registerButton(String button, CalcController theController) {		
 		String his = history.getText();
-		
-		char lastChar = his.charAt(his.length() - 1);
-		if (lastChar == '=') {
-			String removeEquals = his.substring(0, his.length() - 1);
-			history.setText(removeEquals);
+		// right now this method is big, so when we refactor it we will put each button into its own controller method
+		// furthermore, we will make the stack and history be part of the model
+		if (!button.equals("+/-") && !button.equals(".")) {
+			char lastChar = his.charAt(his.length() - 1);
+			if (lastChar == '=') {
+				String removeEquals = his.substring(0, his.length() - 1);
+				history.setText(removeEquals);
+			}
 		}
+		
 		
 		if (button.equals("+")) {
 			System.out.println("addition");
@@ -384,7 +437,118 @@ public class CalcView extends JFrame
 			setCalcValue(value.toString());
 			
 			userValueText.setText("");
+
+		} else if (button.equals("/")) {
+			System.out.println("dividng");
+			String s = userValueText.getText();
+			if (!userValueText.getText().equals("")) {
+				// push number only if value inputted
+				int val = Integer.parseInt(userValueText.getText());
+				numbers.push(BigInteger.valueOf(val));
+			}
+			
+			history.setText(his+","+s+button+"=");
+	
+			BigInteger num1 = numbers.pop();
+			System.out.println(num1);
+			BigInteger num2 = numbers.pop();
+			System.out.println(num2);
+			BigInteger value = num2.divide(num1);
+			System.out.println(value);
+			numbers.push(value);
+			
+			setCalcValue(value.toString());
+			}	
+
+		else if (button.equals("+/-")) {
+			
+			String userVal = userValueText.getText();
+			char changeSign = userVal.charAt(0);
+			
+			if (changeSign == '-') {
+				userVal = userVal.substring(1, his.length());
+				userValueText.setText(userVal);
+			} else {
+				userVal = "-"+userVal;
+				userValueText.setText(userVal);
+			}
+			
+			
+		} else if (button.equals(".")) {
+			
+			String userVal = userValueText.getText();
+			
+			
+			if ( userVal.length() > 1 && userVal.charAt(1) == '.' ) {
+				userVal = userVal.substring(1, his.length());
+				userValueText.setText(userVal);
+			} else {
+				
+				if (userVal.length() > 0 ) {
+					userVal = userVal + ".";
+				} else {
+					userVal = "0." + userVal;
+				}
+				userValueText.setText(userVal);
+			}
+			
+			
+		} else if (button.equals("sin")) {
+			
+			//THIS WILL ALWAYS BE 0 UNTIL DECIMALS ARE SORTED OUT!
+			System.out.print("Sin of ");
+			String input = userValueText.getText();
+
+			history.setText(his+","+input+button+"=");
+	
+			//Extremely convoluted way to convert BigInt > String > Double > (Do the math) > int > BigInt
+			BigInteger num1 = numbers.pop();
+			System.out.println(num1);
+			
+			String numS = num1.toString();
+			Double numD = Double.valueOf(numS);
+			
+			numD = Math.sin(numD);
+			
+			int numI = (int) numD.doubleValue();
+			
+			BigInteger value = BigInteger.valueOf(numI);
+			
+			numbers.push(value);
+			
+			setCalcValue(value.toString());
+			
+			userValueText.setText("");
+		} 
+
+		else if (button.equals("cos")) {
+			
+			//THIS WILL ALWAYS BE 0 UNTIL DECIMALS ARE SORTED OUT!
+			System.out.print("Cos of ");
+			String input = userValueText.getText();
+
+			history.setText(his+","+input+button+"=");
+	
+			//Extremely convoluted way to convert BigInt > String > Double > (Do the math) > int > BigInt
+			BigInteger num1 = numbers.pop();
+			System.out.println(num1);
+			
+			String numS = num1.toString();
+			Double numD = Double.valueOf(numS);
+			
+			numD = Math.cos(numD);
+			
+			int numI = (int) numD.doubleValue();
+			
+			BigInteger value = BigInteger.valueOf(numI);
+			
+			numbers.push(value);
+			
+			setCalcValue(value.toString());
+			
+			userValueText.setText("");
 		}
+
 	}
 	
 	public static void changeInputButton(int buttonInput) {
@@ -404,6 +568,14 @@ public class CalcView extends JFrame
 			history.setText(removeEquals);
 		}
 	}
+	
+	//Added to handle doubles such as pi
+	public static void changeInputButton(double buttonInput) {
+		String value = String.valueOf(buttonInput);
+		value = userValueText.getText() + value;
+		userValueText.setText(value);
+	}
+	
 
 	public static void addToHistory() {
 		String value = history.getText();

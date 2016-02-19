@@ -86,6 +86,7 @@ public void clear() {
 	model.clear();
 	showValue();
 	view.setHistory("Start a new calculation");
+	view.setButtonClicked();
 }
 
 public void setValue(int value) {
